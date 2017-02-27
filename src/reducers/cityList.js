@@ -3,7 +3,7 @@ const initialState = {
 
 }
 
-export default cityList = (state=initialState, action)=>{
+export default function cityList (state=initialState, action){
     return {
         ...state
     }

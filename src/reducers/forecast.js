@@ -3,7 +3,7 @@ const initialState = {
 
 }
 
-export default forecast = (state=initialState, action)=>{
+export default function forecast  (state=initialState, action) {
     return {
         ...state
     }
