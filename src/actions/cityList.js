@@ -8,6 +8,7 @@ import {
 } from '../constants/cityList'
 
 export function getCurrentCity(currentCity) {
+    debugger
     return (dispatch) => {
         //Send API coords request
         dispatch({
