@@ -10,7 +10,8 @@ const persistedState = storageApi.getState(KEY);
 const store = configureStore(persistedState);
 
 store.subscribe(() => {
-  console.log(store.getState());
+  console.log('Subscribe: ',store.getState());
+  storageApi.setState(KEY,store.getState())
 })
 render(
   <Provider store={store}>

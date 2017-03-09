@@ -7,11 +7,11 @@ export default class CityList extends Component {
   }
 
   componentWillMount(){
-    console.log(this.props)
     this.props.actions.getCurrentCity();
   }
   
   render() {
+    console.log(this.props)
     const {currentCity} = this.props.cityList;
     return (
         <div className='city-list'>
