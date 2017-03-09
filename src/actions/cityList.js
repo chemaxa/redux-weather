@@ -8,8 +8,8 @@ import {
 } from '../constants/cityList'
 
 export function getCurrentCity(currentCity) {
-    debugger
     return (dispatch) => {
+
         //Send API coords request
         dispatch({
             type: GET_CURRENT_CITY_REQUEST,
@@ -47,6 +47,14 @@ export function getForecast(position) {
             type: GET_FORECAST_REQUEST,
             payload: position
         })
+        setTimeout(() => {
+            dispatch({
+                type: GET_FORECAST_SUCCESS,
+                payload: {
+                    data: "FORECAST"
+                }
+            })
+        }, 1000);
     }
 }
 

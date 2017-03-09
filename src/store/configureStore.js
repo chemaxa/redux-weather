@@ -9,7 +9,7 @@ const initState = {
   },
   "forecast": {}
 };
-console.log(thunk)
+
 export default function configureStore(initialState=initState) {
     return createStore(
         rootReducer,
