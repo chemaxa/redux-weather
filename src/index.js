@@ -13,6 +13,7 @@ store.subscribe(() => {
   console.log('Subscribe: ',store.getState());
   storageApi.setState(KEY,store.getState())
 })
+
 render(
   <Provider store={store}>
     <div className='app'>

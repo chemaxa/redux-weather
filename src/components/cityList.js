@@ -11,12 +11,11 @@ export default class CityList extends Component {
   }
   
   render() {
-    console.log(this.props)
     const {currentCity} = this.props.cityList;
     return (
-        <div className='city-list'>
+        <section className='city-list'>
             {currentCity}
-        </div>
+        </section>
     )
   }
 }
