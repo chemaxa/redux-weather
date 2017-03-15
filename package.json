@@ -10,7 +10,7 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "react-scripts": "0.9.2"
+    "react-scripts": "0.9.3"
   },
   "scripts": {
     "start": "react-scripts start",
