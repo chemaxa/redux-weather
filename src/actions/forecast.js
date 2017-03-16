@@ -18,14 +18,13 @@ export function getForecast(coords) {
         function forecastByCoord(coords) {
             console.log('City: ', coords)
 
-
             dispatch({
                 type: GET_FORECAST_REQUEST,
                 payload: coords
             })
 
-            let long = 30.2642; //data.coords.long
-            let lat = 59.8944; //data.coords.lat
+            let long = coords.longitude;
+            let lat = coords.latitude;
             let url = `http://api.wunderground.com/api/80a9caf2dd83fba3/forecast/geolookup/lang:RU/q/${lat},${long}.json`;
 
             fetch(url)
