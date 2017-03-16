@@ -5,7 +5,7 @@ import {
     SET_CURRENT_CITY
 } from '../constants/cityList'
 
-function getPositionByIp() {
+function getPositionByIp(dispatch, getState) {
     return fetch('http://ipinfo.io/json')
         .then((response) => {
             return response.json();
@@ -36,17 +36,8 @@ function getPositionByIp() {
         });
 }
 
-function getPostion() {
-    return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                resolve(position),
-                reject(err)
-            );
-        } else {
-            return getPositionByIp();
-        }
-    });
+function getPosition(dispatch, getState) {
+    // eslint-disable-next-line
     function resolve(position) {
         //Get current user position 
         let long = position.coords.longitude;
@@ -80,10 +71,20 @@ function getPostion() {
                 })
             });
     };
+    // eslint-disable-next-line
     function reject() {
-        return getPositionByIp();
+        return getPositionByIp(dispatch, getState);
     };
-
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                resolve,
+                reject
+            );
+        } else {
+            return getPositionByIp(dispatch, getState);
+        }
+    });
 }
 
 export function getCurrentCity() {
@@ -95,7 +96,7 @@ export function getCurrentCity() {
             payload: {}
         })
 
-        return getPosition(dispatch,getState);
+        return getPosition(dispatch, getState);
 
     }
 }
