@@ -3,15 +3,15 @@ import { render } from 'react-dom'
 import App from './containers/App'
 import configureStore from './store/configureStore'
 import { Provider } from 'react-redux'
-import storageApi from './api/storage'
-import { KEY } from './constants/api'
+//import storageApi from './api/storage'
+//import { KEY } from './constants/api'
 
-const persistedState = storageApi.getState(KEY);
-const store = configureStore(persistedState);
+//const persistedState = storageApi.getState(KEY);
+const store = configureStore();
 
 store.subscribe(() => {
   console.log('Subscribe: ',store.getState());
-  storageApi.setState(KEY,store.getState())
+  //storageApi.setState(KEY,store.getState())
 })
 
 render(

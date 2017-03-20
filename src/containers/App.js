@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <CityList cityList={this.props.cityList} actions={this.props.cityActions}/>
-        <Forecast actions={this.props.forecastActions} currentCoord={this.props.cityList.currentCoord}/>
+        <Forecast actions={this.props.forecastActions} forecast={this.props.forecast}/>
       </div>
     );
   }
