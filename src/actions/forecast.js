@@ -16,7 +16,6 @@ export function getForecast(data) {
         }
         
         function forecastByCoord(data) {
-            console.log('City: ', data)
             dispatch({
                 type: GET_FORECAST_REQUEST,
                 payload: data

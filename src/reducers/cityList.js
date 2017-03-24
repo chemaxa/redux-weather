@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   currentCity: '',
+  currentCoord: {},
   list: []
 }
 
