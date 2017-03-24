@@ -4,17 +4,24 @@ import {
     GET_FORECAST_FAILURE
 } from '../constants/forecast'
 
-import { getCurrentCity } from './cityList'
+import {
+    getCurrentCity
+} from './cityList'
 
 export function getForecast(data) {
     return (dispatch, getState) => {
-
         if (!data) {
-            dispatch(getCurrentCity()).then(forecastByCoord)
+            dispatch(getCurrentCity())
+                .then((city) => {
+                    console.log('ForecastCity: ', city);
+                    return city;
+                })
+                .catch((err)=>{console.log('ErrForecastCity: ', err)});
+                //.then(forecastByCoord)
         } else {
             forecastByCoord(data);
         }
-        
+
         function forecastByCoord(data) {
             dispatch({
                 type: GET_FORECAST_REQUEST,

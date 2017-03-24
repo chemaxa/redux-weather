@@ -18,15 +18,15 @@ export default function cityList(state = initialState, action) {
     case GET_CURRENT_CITY_REQUEST:
       return { ...state, isPending: true };
     case GET_CURRENT_CITY_SUCCESS:
-      return { ...state, currentCity: action.payload.address, currentCoord: action.payload.coords, list: action.payload.list, isPending: false };
+      return { ...state, currentCity: action.payload.address, currentCoord: action.payload.coords, list: action.payload.list.slice(), isPending: false };
     case GET_CURRENT_CITY_FAILURE:
       return { ...state, err: action.payload.err, isPending: false };
     case SET_CURRENT_CITY:
       return { ...state, currentCity: action.payload };
     case ADD_CITY:
-      return { ...state, list: action.payload.list };
+      return { ...state, list: action.payload.list.slice() };
     case DELETE_CITY:
-      return { ...state, list: action.payload.list };
+      return { ...state, list: action.payload.list.slice() };
     default:
       return state;
   }
