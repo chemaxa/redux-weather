@@ -5,44 +5,35 @@ import {
     SET_CURRENT_CITY
 } from '../constants/cityList'
 
-function getPositionByIp(dispatch, getState) {
+function getPositionByIp() {
     return fetch('http://ipinfo.io/json')
         .then((response) => {
             return response.json();
         })
 }
 
-function getPosition(dispatch, getState) {
+function getPosition() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         } else {
-            return getPositionByIp(dispatch, getState);
+            return getPositionByIp();
         }
     });
 }
 
-function resolvePosition(dispatch, getState, position) {
+function resolvePosition(position) {
     //Get current user position 
-    let long = position.coords.longitude;
-    let lat = position.coords.latitude;
-    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=en-GB`;
-
-    return fetch(url)
-        .then((response) => {
-            return response.json();
-        })
+    return {
+        lat: position.coords.latitude,
+        long: position.coords.longitude
+    };
 };
 
-//Getting coords by GeoAPI
-// if (!~getState()['cityList']['list'].indexOf(data['results'][0]["formatted_address"])) {
-//     getState()['cityList']['list'].push(data['results'][0]["formatted_address"]);
-// }
+function getCityByCoords(){
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.long}&language=en-GB`;
 
-//Getting coords by IP
-// if (!~getState()['cityList']['list'].indexOf(data['city'])) {
-//     getState()['cityList']['list'].push(data['city']);
-// }
+}
 
 export function getCurrentCity() {
     return (dispatch, getState) => {
@@ -52,18 +43,23 @@ export function getCurrentCity() {
         })
         return getPosition(dispatch, getState)
             .then(
-                resolvePosition.bind(null, dispatch, getState),
-                getPositionByIp.bind(null, dispatch, getState)
+                resolvePosition,
+                getPositionByIp
             )
             .then((data) => {
-                let coords = data['coords'] || {
-                    lat: data.loc.split(',')[0],
-                    long: data.loc.split(',')[1]
+                debugger
+                
+                let coords = {
+                    lat: data['lat'] || data.loc.split(',')[0],
+                    long: data['long'] || data.loc.split(',')[1]
                 };
+                
 
                 let list = getState()['cityList']['list'] || [];
-                //Getting coords by IP
+
                 console.log(list, data)
+
+                //Getting coords by IP
                 if (data['city'] && !~list.indexOf(data['city'])) {
                     list.push(data['city']);
                 }
