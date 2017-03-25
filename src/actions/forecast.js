@@ -12,26 +12,27 @@ export function getForecast(data) {
     return (dispatch, getState) => {
         if (!data) {
             dispatch(getCurrentCity())
-                .then((city) => {
-                    console.log('ForecastCity: ', city);
-                    return city;
-                })
-                .catch((err)=>{console.log('ErrForecastCity: ', err)});
-                //.then(forecastByCoord)
+                .then(forecastByCoord)
+                .catch((err) => {
+                    console.log('ErrForecastCity: ', err)
+                });
+            //.then(forecastByCoord)
         } else {
             forecastByCoord(data);
         }
 
-        function forecastByCoord(data) {
+        function forecastByCoord({
+            address,
+            coords: {
+                lat,
+                long
+            }
+        }) {
             dispatch({
                 type: GET_FORECAST_REQUEST,
-                payload: data
+                payload: address
             })
-
-            let long = data.coords.longitude;
-            let lat = data.coords.latitude;
             let url = `http://api.wunderground.com/api/80a9caf2dd83fba3/forecast/geolookup/lang:RU/q/${lat},${long}.json`;
-
             fetch(url)
                 .then(response => response.json())
                 .then((data) => {
@@ -48,7 +49,6 @@ export function getForecast(data) {
                         }
                     })
                 });
-
         }
     }
 }
