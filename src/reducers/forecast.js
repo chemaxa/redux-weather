@@ -5,17 +5,17 @@ import {
 } from '../constants/forecast'
 
 const initialState = {
-    forecast: {}
-}
+    isPending: false
+};
 
 export default function forecast(state = initialState, action) {
     switch (action.type) {
         case GET_FORECAST_REQUEST:
-            return { ...state, forecast: action.payload, isPending: true };
+            return { ...state, data: action.payload, isPending: true };
         case GET_FORECAST_SUCCESS:
-            return { ...state, forecast: action.payload, isPending: false };
+            return { ...state, data: action.payload, isPending: false };
         case GET_FORECAST_FAILURE:
-            return { ...state, forecast: action.payload, err: action.payload.err, isPending: false };
+            return { ...state, data: action.payload, err: action.payload.err, isPending: false };
         default:
             return state
     }

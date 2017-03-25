@@ -11,6 +11,7 @@ export default class CityList extends Component {
   }
   
   render() {
+    console.log('CityList: ',this.props)
     const {currentCity} = this.props.cityList;
     return (
         <section className='city-list'>

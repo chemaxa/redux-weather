@@ -11,10 +11,18 @@ export default class Forecast extends Component {
     }
 
     render() {
+        console.log('Forecast: ',this.props)
+        
+        let text = 'Please, waiting...';
+
+        if(this.props.forecast.isPending === false){
+            text = this.props.forecast.data.forecastday[0].fcttext;
+        }
+        
         return (
             <section className='forecast'>
-                Forecast
-        </section>
+                {text}
+            </section>
         )
     }
 }

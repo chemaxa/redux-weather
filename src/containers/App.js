@@ -10,8 +10,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <CityList cityList={this.props.cityList} actions={this.props.cityActions}/>
-        <Forecast actions={this.props.forecastActions} currentCoord={this.props.cityList.currentCoord}/>
+        <CityList actions={this.props.cityActions} cityList={this.props.cityList}/>
+        <Forecast actions={this.props.forecastActions} forecast={this.props.forecast}/>
       </div>
     );
   }

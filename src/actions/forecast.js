@@ -4,27 +4,32 @@ import {
     GET_FORECAST_FAILURE
 } from '../constants/forecast'
 
-import { getCurrentCity } from './cityList'
+import {
+    getCurrentCity
+} from './cityList'
 
-export function getForecast(coords) {
+export function getForecast(data) {
     return (dispatch, getState) => {
-
-        if (!coords) {
-            dispatch(getCurrentCity()).then(forecastByCoord)
+        if (!data) {
+            dispatch(getCurrentCity())
+                .then((city) => {
+                    console.log('ForecastCity: ', city);
+                    return city;
+                })
+                .catch((err)=>{console.log('ErrForecastCity: ', err)});
+                //.then(forecastByCoord)
         } else {
-            forecastByCoord(coords);
+            forecastByCoord(data);
         }
 
-        function forecastByCoord(coords) {
-            console.log('City: ', coords)
-
+        function forecastByCoord(data) {
             dispatch({
                 type: GET_FORECAST_REQUEST,
-                payload: coords
+                payload: data
             })
 
-            let long = coords.longitude;
-            let lat = coords.latitude;
+            let long = data.coords.longitude;
+            let lat = data.coords.latitude;
             let url = `http://api.wunderground.com/api/80a9caf2dd83fba3/forecast/geolookup/lang:RU/q/${lat},${long}.json`;
 
             fetch(url)
@@ -32,7 +37,7 @@ export function getForecast(coords) {
                 .then((data) => {
                     dispatch({
                         type: GET_FORECAST_SUCCESS,
-                        payload: data
+                        payload: data.forecast.txt_forecast
                     })
                 })
                 .catch((err) => {
