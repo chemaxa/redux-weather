@@ -59,15 +59,10 @@ export function getCurrentCity() {
             .then((coords) => {
                 return getCityByCoords(coords)
                     .then((city) => {
-                        debugger
                         let list = getState()['cityList']['list'] || [];
-
-                        console.log(list, city)
-
                         if (list.indexOf(city)) {
                             list.push(city);
                         }
-
                         dispatch({
                             type: GET_CURRENT_CITY_SUCCESS,
                             payload: {
@@ -83,7 +78,6 @@ export function getCurrentCity() {
                     })
             })
             .catch((err) => {
-                console.log(err)
                 dispatch({
                     type: GET_CURRENT_CITY_FAILURE,
                     payload: {
