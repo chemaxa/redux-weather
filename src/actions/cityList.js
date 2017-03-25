@@ -5,34 +5,44 @@ import {
     SET_CURRENT_CITY
 } from '../constants/cityList'
 
-function getPositionByIp() {
+function getCoordsByIp() {
     return fetch('http://ipinfo.io/json')
-        .then((response) => {
-            return response.json();
+        .then(response => response.json())
+        .then((data) => {
+            return {
+                lat: data.loc.split(',')[0],
+                long: data.loc.split(',')[1]
+            };
         })
 }
 
-function getPosition() {
+function getCoords() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         } else {
-            return getPositionByIp();
+            return getCoordsByIp();
         }
     });
 }
 
-function resolvePosition(position) {
-    //Get current user position 
+function resolveCoords(position) {
     return {
         lat: position.coords.latitude,
         long: position.coords.longitude
     };
 };
 
-function getCityByCoords(){
-    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords.lat},${coords.long}&language=en-GB`;
-
+function getCityByCoords({
+    lat,
+    long
+}) {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&language=en-GB`;
+    return fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then(data => data['results'][0]["formatted_address"])
 }
 
 export function getCurrentCity() {
@@ -41,42 +51,36 @@ export function getCurrentCity() {
             type: GET_CURRENT_CITY_REQUEST,
             payload: {}
         })
-        return getPosition(dispatch, getState)
+        return getCoords()
             .then(
-                resolvePosition,
-                getPositionByIp
+                resolveCoords,
+                getCoordsByIp
             )
-            .then((data) => {
-                debugger
-                
-                let coords = {
-                    lat: data['lat'] || data.loc.split(',')[0],
-                    long: data['long'] || data.loc.split(',')[1]
-                };
-                
+            .then((coords) => {
+                return getCityByCoords(coords)
+                    .then((city) => {
+                        debugger
+                        let list = getState()['cityList']['list'] || [];
 
-                let list = getState()['cityList']['list'] || [];
+                        console.log(list, city)
 
-                console.log(list, data)
+                        if (list.indexOf(city)) {
+                            list.push(city);
+                        }
 
-                //Getting coords by IP
-                if (data['city'] && !~list.indexOf(data['city'])) {
-                    list.push(data['city']);
-                }
-                //Getting coords by GeoAPI
-                if (data['results'] && !~list.indexOf(data['results'][0]["formatted_address"])) {
-                    list.push(data['results'][0]["formatted_address"]);
-                }
-                let payload = {
-                    address: data['city'] || data['results'][0]["formatted_address"],
-                    coords,
-                    list
-                };
-                dispatch({
-                    type: GET_CURRENT_CITY_SUCCESS,
-                    payload
-                });
-                return coords;
+                        dispatch({
+                            type: GET_CURRENT_CITY_SUCCESS,
+                            payload: {
+                                address: city,
+                                coords,
+                                list
+                            }
+                        });
+                        return {
+                            address:city,
+                            coords
+                        }
+                    })
             })
             .catch((err) => {
                 console.log(err)
