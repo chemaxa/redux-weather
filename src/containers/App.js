@@ -16,14 +16,12 @@ class App extends Component {
   render() {
     return (
         <div className="ui centered stackable grid container">
-          <div className="four wide column">
+          <div className="eight wide column">
             <form className="ui form">
-              <div className="fields">
                 <div className="field">
                   <label>City:</label>
                   <input type="text" name="city" placeholder="City"/>
                 </div>
-               </div>
                <button className="ui button" type="submit">Submit</button>
             </form>
           </div>
