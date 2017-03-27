@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 
 const initState = {
   "cityList": {},
-  "forecast": {}
+  "forecast": {},
+  "form":{}
 };
 
 export default function configureStore(initialState = initState) {

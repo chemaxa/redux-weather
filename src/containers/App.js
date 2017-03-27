@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import CityList from '../components/cityList';
 import Forecast from '../components/forecast';
+import SimpleForm from './Form';
 import * as cityActions from '../actions/cityList';
 import * as forecastActions from '../actions/forecast';
 
@@ -17,13 +18,7 @@ class App extends Component {
     return (
         <div className="ui centered stackable grid container">
           <div className="eight wide column">
-            <form className="ui form">
-                <div className="field">
-                  <label>City:</label>
-                  <input type="text" name="city" placeholder="City"/>
-                </div>
-               <button className="ui button" type="submit">Submit</button>
-            </form>
+            <SimpleForm/>
           </div>
           <div className="four column centered row">
             <div className="column">
