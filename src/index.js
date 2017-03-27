@@ -6,6 +6,8 @@ import { Provider } from 'react-redux'
 import storageApi from './api/storage'
 import { KEY } from './constants/api'
 
+import 'semantic-ui-css/semantic.min.css';
+
 const persistedState = storageApi.getState(KEY);
 const store = configureStore(persistedState);
 
@@ -16,9 +18,7 @@ store.subscribe(() => {
 
 render(
   <Provider store={store}>
-    <div className='app'>
-      <App />
-    </div>
+     <App />
   </Provider>,
   document.getElementById('root')
 )

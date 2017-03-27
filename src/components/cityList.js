@@ -15,7 +15,14 @@ export default class CityList extends Component {
     const {currentCity} = this.props.cityList;
     return (
         <section className='city-list'>
-            {currentCity}
+            <div className="ui card">
+              <div className="content">
+                  <div className="header">City</div>
+                  <div className="description">
+                      <p>{currentCity}</p>
+                  </div>
+              </div>
+          </div>
         </section>
     )
   }

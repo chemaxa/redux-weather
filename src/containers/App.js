@@ -9,10 +9,27 @@ import * as forecastActions from '../actions/forecast';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <CityList actions={this.props.cityActions} cityList={this.props.cityList}/>
-        <Forecast actions={this.props.forecastActions} forecast={this.props.forecast}/>
-      </div>
+        <div className="ui centered stackable grid container">
+          <div className="four wide column">
+            <form className="ui form">
+              <div className="fields">
+                <div className="field">
+                  <label>City:</label>
+                  <input type="text" name="city" placeholder="City"/>
+                </div>
+               </div>
+               <button className="ui button" type="submit">Submit</button>
+            </form>
+          </div>
+          <div className="four column centered row">
+            <div className="column">
+              <CityList actions={this.props.cityActions} cityList={this.props.cityList}/>
+            </div>
+            <div className="column">
+              <Forecast actions={this.props.forecastActions} forecast={this.props.forecast}/>
+            </div>
+          </div>
+        </div>
     );
   }
 }

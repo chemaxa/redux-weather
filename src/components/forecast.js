@@ -21,7 +21,14 @@ export default class Forecast extends Component {
         
         return (
             <section className='forecast'>
-                {text}
+                <div className="ui card">
+                    <div className="content">
+                        <div className="header">Forecast</div>
+                        <div className="description">
+                            <p>{text}</p>
+                        </div>
+                    </div>
+                </div>
             </section>
         )
     }
