@@ -7,6 +7,12 @@ import * as cityActions from '../actions/cityList';
 import * as forecastActions from '../actions/forecast';
 
 class App extends Component {
+  
+  componentWillMount() {
+        this.props.forecastActions.getForecast();
+        this.props.cityActions.getCurrentCity();
+  }
+  
   render() {
     return (
         <div className="ui centered stackable grid container">
@@ -26,7 +32,7 @@ class App extends Component {
               <CityList actions={this.props.cityActions} cityList={this.props.cityList}/>
             </div>
             <div className="column">
-              <Forecast actions={this.props.forecastActions} forecast={this.props.forecast}/>
+              <Forecast forecast={this.props.forecast}/>
             </div>
           </div>
         </div>

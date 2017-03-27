@@ -6,9 +6,6 @@ export default class CityList extends Component {
     this.props.setCurrentCity(+e.target.innerText)
   }
 
-  componentWillMount(){
-    this.props.actions.getCurrentCity();
-  }
   
   render() {
     console.log('CityList: ',this.props)
