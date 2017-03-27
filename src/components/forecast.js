@@ -7,7 +7,7 @@ export default class Forecast extends Component {
         let text = 'Please, waiting...';
 
         if(this.props.forecast.isPending === false){
-            text = this.props.forecast.data.forecastday[0].fcttext;
+            text = this.props.forecast.data.forecastday[0].fcttext_metric;
         }
         
         return (
