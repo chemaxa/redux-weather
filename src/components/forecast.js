@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 export default class Forecast extends Component {
     render() {
-        console.log('Forecast: ',this.props)
-        
         let text = 'Please, waiting...';
 
         if(this.props.forecast.isPending === false){
