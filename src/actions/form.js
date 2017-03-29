@@ -2,6 +2,7 @@ import {
     HANDLE_SUBMIT,
     ON_CHANGE
 } from '../constants/form'
+import fetchJsonp from 'fetch-jsonp'
 
 export function handleSubmit(data) {
     console.log('Submitted data:', data);
@@ -13,12 +14,12 @@ export function handleSubmit(data) {
     }
 }
 
-export function onChange(data) {
-    console.log('Changed data:', data);
-    data = 'new';
-    let url = `http://autocompletecity.geobytes.com/AutoCompleteCity?callback=?&q=${data}`;
+export function onChange({cityName}) {
+    if(!cityName)return;
+    console.log('Changed data:', cityName);
+    let url = `http://autocompletecity.geobytes.com/AutoCompleteCity?q=${cityName}`;
 
-    fetch(url,{mode: 'cors'})
+    fetchJsonp(url)
         .then((res) => {
             return res.json();
         })
@@ -29,7 +30,7 @@ export function onChange(data) {
     return {
         type: ON_CHANGE,
         payload: {
-            data
+            cityName
         }
     }
 }
