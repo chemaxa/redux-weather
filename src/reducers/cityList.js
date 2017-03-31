@@ -3,6 +3,7 @@ import {
   GET_CURRENT_CITY_SUCCESS,
   GET_CURRENT_CITY_FAILURE,
   SET_CURRENT_CITY,
+  ON_INPUT,
   ADD_CITY,
   DELETE_CITY
 } from '../constants/cityList'
@@ -10,7 +11,8 @@ import {
 const initialState = {
   currentCity: '',
   currentCoord: {},
-  list: []
+  list: [],
+  value: ''
 }
 
 export default function cityList(state = initialState, action) {
@@ -24,9 +26,11 @@ export default function cityList(state = initialState, action) {
     case SET_CURRENT_CITY:
       return { ...state, currentCity: action.payload };
     case ADD_CITY:
-      return { ...state, list: action.payload.list.slice() };
+      return { ...state, list: action.payload.list.slice(), value: action.payload.value };
     case DELETE_CITY:
       return { ...state, list: action.payload.list.slice() };
+    case ON_INPUT:
+      return { ...state, options: action.payload.options };
     default:
       return state;
   }

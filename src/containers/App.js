@@ -5,7 +5,6 @@ import CityList from '../components/cityList'
 import Forecast from '../components/forecast'
 import * as cityActions from '../actions/cityList'
 import * as forecastActions from '../actions/forecast'
-import * as selectActions from '../actions/select'
 import Select from 'react-select'
 
 class App extends Component {
@@ -17,14 +16,14 @@ class App extends Component {
 
   render() {
     return (
-      
+
       <div className="ui centered stackable grid container">
         <div className="eight wide column">
           <h1 className="ui header">Choose a city</h1>
           <Select.Async
-            value={this.props.select.value}
-            onChange={this.props.selectActions.onChange}
-            loadOptions={this.props.selectActions.onInput}
+            value={this.props.cityList.value}
+            onChange={this.props.cityActions.addCity}
+            loadOptions={this.props.cityActions.onInput}
           />
         </div>
         <div className="four column centered row">
@@ -43,15 +42,13 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     cityActions: bindActionCreators(cityActions, dispatch),
-    forecastActions: bindActionCreators(forecastActions, dispatch),
-    selectActions: bindActionCreators(selectActions, dispatch)
+    forecastActions: bindActionCreators(forecastActions, dispatch)
   }
 }
 const mapStateToProps = (state) => {
   return {
     cityList: state.cityList,
-    forecast: state.forecast,
-    select: state.select
+    forecast: state.forecast
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
