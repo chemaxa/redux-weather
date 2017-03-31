@@ -15,9 +15,11 @@ export function getForecast(data) {
                 .then((data) => {
                     setForecastByCoord(data, dispatch)
                 })
-                .catch((err) => {
-                    console.log('ErrForecastCity: ', err)
-                });
+                .catch(err => {
+                    //TODO: Should be added error handler!
+                    console.warn('Needed err handler!')
+                    console.warn(err)
+                })
         } else {
             setForecastByCoord(data, dispatch);
         }
@@ -25,7 +27,13 @@ export function getForecast(data) {
 }
 //TODO: Refactor it!
 // Bind dispatch
-export function setForecastByCoord({ address, coords: { lat, long } }, dispatch) {
+export function setForecastByCoord({
+    address,
+    coords: {
+        lat,
+        long
+    }
+}, dispatch) {
     dispatch({
         type: GET_FORECAST_REQUEST,
         payload: address
