@@ -23,8 +23,8 @@ class App extends Component {
           <h1 className="ui header">Choose a city</h1>
           <Select.Async
             value={this.props.select.value}
-            onChange={(data) => { console.log(data); this.props.selectActions.onChange(data) }}
-            loadOptions={(input, callback) => { this.props.selectActions.onInput(input, callback) }}
+            onChange={this.props.selectActions.onChange}
+            loadOptions={this.props.selectActions.onInput}
           />
         </div>
         <div className="four column centered row">
