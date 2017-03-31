@@ -7,7 +7,9 @@ import {
     ADD_CITY,
     DELETE_CITY
 } from '../constants/cityList'
-import { setForecastByCoord, resetForecast } from './forecast'
+import {
+    setForecastByCoord
+} from './forecast'
 import fetchJsonp from 'fetch-jsonp'
 
 export function addCity(data) {
@@ -35,12 +37,14 @@ export function addCity(data) {
 
 export function deleteCity(data) {
     return (dispatch, getState) => {
-        debugger
         let list = getState()['cityList']['list'] || [];
         let id = list.indexOf(data);
         if (id !== -1) {
             list.splice(id, 1);
-            resetForecast();
+            //if only 1 city in list, set it city as current 
+            if (list.length === 1) {
+                setCurrentCity(list[0])(dispatch);
+            }
             dispatch({
                 type: DELETE_CITY,
                 payload: {
@@ -48,7 +52,6 @@ export function deleteCity(data) {
                 }
             })
         }
-
     }
 }
 
@@ -60,8 +63,8 @@ export function getCurrentCity() {
         })
         return getCoords()
             .then(
-            resolveCoords,
-            getCoordsByIp
+                resolveCoords,
+                getCoordsByIp
             )
             .then((coords) => {
                 return getCityByCoords(coords)
@@ -85,7 +88,7 @@ export function getCurrentCity() {
                     })
             })
             .catch((err) => {
-                dispatch({
+                return dispatch({
                     type: GET_CURRENT_CITY_FAILURE,
                     payload: {
                         err: err.message
@@ -96,10 +99,9 @@ export function getCurrentCity() {
 }
 
 export function setCurrentCity(city) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         getCoordsByCity(city)
             .then(coords => {
-
                 let data = {
                     address: city,
                     coords: {
@@ -115,12 +117,20 @@ export function setCurrentCity(city) {
                     payload: data
                 })
             })
+            .catch(err => {
+                //TODO: Should be added error handler!
+                console.warn('Needed err handler!')
+                console.warn(err)
+            })
     }
 }
 
 export function onInput(input, callback) {
     return (dispatch) => {
-        if (!input) { callback(); return; }
+        if (!input) {
+            callback();
+            return;
+        }
         let url = `http://autocompletecity.geobytes.com/AutoCompleteCity?q=${input}`;
         fetchJsonp(url)
             .then((res) => {
@@ -143,6 +153,11 @@ export function onInput(input, callback) {
                     }
                 })
             })
+            .catch(err => {
+                //TODO: Should be added error handler!
+                console.warn('Needed err handler!')
+                console.warn(err)
+            })
     }
 }
 
@@ -154,6 +169,11 @@ function getCoordsByIp() {
                 lat: data.loc.split(',')[0],
                 long: data.loc.split(',')[1]
             };
+        })
+        .catch(err => {
+            //TODO: Should be added error handler!
+            console.warn('Needed err handler!')
+            console.warn(err)
         })
 }
 
@@ -181,6 +201,11 @@ function getCoordsByCity(city) {
             return response.json();
         })
         .then(data => data['results'][0]["geometry"]["location"])
+        .catch(err => {
+            //TODO: Should be added error handler!
+            console.warn('Needed err handler!')
+            console.warn(err)
+        })
 }
 
 function getCityByCoords({
@@ -193,4 +218,9 @@ function getCityByCoords({
             return response.json();
         })
         .then(data => data['results'][0]["formatted_address"])
+        .catch(err => {
+            //TODO: Should be added error handler!
+            console.warn('Needed err handler!')
+            console.warn(err)
+        })
 }

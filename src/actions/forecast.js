@@ -1,8 +1,7 @@
 import {
     GET_FORECAST_REQUEST,
     GET_FORECAST_SUCCESS,
-    GET_FORECAST_FAILURE,
-    RESET_FORECAST
+    GET_FORECAST_FAILURE
 } from '../constants/forecast'
 
 import {
@@ -48,11 +47,4 @@ export function setForecastByCoord({ address, coords: { lat, long } }, dispatch)
                 }
             })
         });
-}
-
-export function resetForecast() {
-    return (dispatch) => dispatch({
-        type: RESET_FORECAST,
-        payload: {}
-    })
 }
