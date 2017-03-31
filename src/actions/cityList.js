@@ -7,7 +7,7 @@ import {
     ADD_CITY,
     DELETE_CITY
 } from '../constants/cityList'
-
+import { setForecastByCoord } from './forecast'
 import fetchJsonp from 'fetch-jsonp'
 
 export function addCity(data) {
@@ -34,7 +34,6 @@ export function addCity(data) {
 }
 
 export function deleteCity(data) {
-    console.log('Submitted data:', data);
     if (!data) return;
     return (dispatch, getState) => {
         let list = getState()['cityList']['list'] || [];
@@ -95,20 +94,31 @@ export function getCurrentCity() {
     }
 }
 
-export function setCurrentCity(data) {
-    return {
-        type: SET_CURRENT_CITY,
-        payload: {
-            address: data.address,
-            coords: data.coords
-        }
+export function setCurrentCity(city) {
+    return (dispatch, getState) => {
+        getCoordsByCity(city)
+            .then(coords => {
+                
+                let data = {
+                    address: city,
+                    coords: {
+                        lat: coords.lat,
+                        long: coords.lng
+                    }
+                };
+                //TODO: Refactor it!
+                // Should be hide dispatch
+                setForecastByCoord(data, dispatch)
+                dispatch({
+                    type: SET_CURRENT_CITY,
+                    payload: data
+                })
+            })
     }
 }
 
-
 export function onInput(input, callback) {
     return (dispatch) => {
-        console.log('Changed data:', input);
         if (!input) { callback(); return; }
         let url = `http://autocompletecity.geobytes.com/AutoCompleteCity?q=${input}`;
         fetchJsonp(url)
@@ -116,7 +126,6 @@ export function onInput(input, callback) {
                 return res.json();
             })
             .then((list) => {
-                console.log('cityList: ', list);
                 let options = list.map(
                     (city) => ({
                         value: city,
@@ -163,6 +172,15 @@ function resolveCoords(position) {
         long: position.coords.longitude
     };
 };
+
+function getCoordsByCity(city) {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}`;
+    return fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then(data => data['results'][0]["geometry"]["location"])
+}
 
 function getCityByCoords({
     lat,

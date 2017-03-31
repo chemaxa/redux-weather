@@ -24,7 +24,7 @@ export default function cityList(state = initialState, action) {
     case GET_CURRENT_CITY_FAILURE:
       return { ...state, err: action.payload.err, isPending: false };
     case SET_CURRENT_CITY:
-      return { ...state, currentCity: action.payload };
+      return { ...state, currentCity: action.payload.address };
     case ADD_CITY:
       return { ...state, list: action.payload.list.slice(), value: action.payload.value };
     case DELETE_CITY:
