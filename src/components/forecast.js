@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Forecast = (props) => {
-    
+    if(!props.forecast.data)return null;
     let text = 'Please, waiting...';
     let icon_url = '';
     if (props.forecast.isPending === false) {
