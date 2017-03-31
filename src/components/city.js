@@ -17,7 +17,7 @@ const City = (props) => {
                     <i className="checkmark icon"></i>
                     Set
                 </button>
-                <button className="ui bottom mini negative button">
+                <button className="ui bottom mini negative button" onClick={actions.deleteCity.bind(null, city)}>
                     <i className="delete icon"></i>
                     Delete
                 </button>

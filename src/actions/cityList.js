@@ -7,7 +7,7 @@ import {
     ADD_CITY,
     DELETE_CITY
 } from '../constants/cityList'
-import { setForecastByCoord } from './forecast'
+import { setForecastByCoord, resetForecast } from './forecast'
 import fetchJsonp from 'fetch-jsonp'
 
 export function addCity(data) {
@@ -34,12 +34,13 @@ export function addCity(data) {
 }
 
 export function deleteCity(data) {
-    if (!data) return;
     return (dispatch, getState) => {
+        debugger
         let list = getState()['cityList']['list'] || [];
-        let id = list.indexOf(data.value);
+        let id = list.indexOf(data);
         if (id !== -1) {
             list.splice(id, 1);
+            resetForecast();
             dispatch({
                 type: DELETE_CITY,
                 payload: {
@@ -98,7 +99,7 @@ export function setCurrentCity(city) {
     return (dispatch, getState) => {
         getCoordsByCity(city)
             .then(coords => {
-                
+
                 let data = {
                     address: city,
                     coords: {
