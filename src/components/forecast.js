@@ -1,24 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Forecast extends Component {
-    render() {
-        let text = 'Please, waiting...';
+const Forecast = (props) => {
+    
+    let text = 'Please, waiting...';
+    let icon_url = '';
+    if (props.forecast.isPending === false) {
+        text = props.forecast.data.forecastday[0].fcttext_metric;
+        icon_url = props.forecast.data.forecastday[0].icon_url;
+    }
 
-        if(this.props.forecast.isPending === false){
-            text = this.props.forecast.data.forecastday[0].fcttext_metric;
-        }
-        
-        return (
-            <section className='forecast'>
-                <div className="ui card">
-                    <div className="content">
-                        <div className="header">Forecast</div>
-                        <div className="description">
-                            <p>{text}</p>
-                        </div>
+    return (
+        <section className='forecast'>
+            <div className="ui card">
+                <div className="content">
+                    <div className="header">Forecast</div>
+                    <div className="description">
+                        <p>{text}</p>
+                        <img src={icon_url} alt="" />
                     </div>
                 </div>
-            </section>
-        )
-    }
+            </div>
+        </section>
+    )
+
 }
+export default Forecast;
