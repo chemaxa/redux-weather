@@ -2,6 +2,7 @@
   "name": "redux-weather",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://chemaxa.github.io/redux-weather",
   "dependencies": {
     "fetch-jsonp": "^1.0.6",
     "lodash.throttle": "^4.1.1",
@@ -14,6 +15,7 @@
     "semantic-ui-css": "^2.2.9"
   },
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "react-scripts": "0.9.3"
   },
   "scripts": {
