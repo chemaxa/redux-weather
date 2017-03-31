@@ -5,7 +5,7 @@ import thunk from 'redux-thunk'
 const initState = {
   "cityList": {},
   "forecast": {},
-  "form":{}
+  "select":{}
 };
  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
  

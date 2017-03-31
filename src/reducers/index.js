@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import cityList from './cityList'
 import forecast from './forecast'
-import { reducer as form } from 'redux-form'
+import select from './select'
 
 export default combineReducers({
   cityList,
   forecast,
-  form
+  select
 })

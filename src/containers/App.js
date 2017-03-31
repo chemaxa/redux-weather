@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import CityList from '../components/cityList';
-import Forecast from '../components/forecast';
-import CityForm from '../components/form';
-import * as cityActions from '../actions/cityList';
-import * as forecastActions from '../actions/forecast';
-import * as formActions from './../actions/form'
+import CityList from '../components/cityList'
+import Forecast from '../components/forecast'
+import * as cityActions from '../actions/cityList'
+import * as forecastActions from '../actions/forecast'
+import * as selectActions from '../actions/select'
+import Select from 'react-select'
 
 class App extends Component {
 
@@ -17,9 +17,15 @@ class App extends Component {
 
   render() {
     return (
+      
       <div className="ui centered stackable grid container">
         <div className="eight wide column">
-          <CityForm onSubmit={this.props.formActions.handleSubmit} />
+          <h1 className="ui header">Choose a city</h1>
+          <Select.Async
+            value={this.props.select.value}
+            onChange={(data) => { console.log(data); this.props.selectActions.onChange(data) }}
+            loadOptions={(input, callback) => { this.props.selectActions.onInput(input, callback) }}
+          />
         </div>
         <div className="four column centered row">
           <div className="column">
@@ -33,17 +39,19 @@ class App extends Component {
     );
   }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
     cityActions: bindActionCreators(cityActions, dispatch),
     forecastActions: bindActionCreators(forecastActions, dispatch),
-    formActions: bindActionCreators(formActions, dispatch)
+    selectActions: bindActionCreators(selectActions, dispatch)
   }
 }
 const mapStateToProps = (state) => {
   return {
     cityList: state.cityList,
-    forecast: state.forecast
+    forecast: state.forecast,
+    select: state.select
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

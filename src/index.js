@@ -6,7 +6,9 @@ import { Provider } from 'react-redux'
 import storageApi from './api/storage'
 import { KEY } from './constants/api'
 
-import 'semantic-ui-css/semantic.min.css';
+import 'semantic-ui-css/semantic.min.css' // semantic ui css
+import 'react-select/dist/react-select.css' // react select css
+
 // eslint-disable-next-line
 const persistedState = storageApi.getState(KEY);
 const store = configureStore();
