@@ -16,7 +16,6 @@ export function getForecast(data) {
                 .catch((err) => {
                     console.log('ErrForecastCity: ', err)
                 });
-            //.then(forecastByCoord)
         } else {
             forecastByCoord(data);
         }
