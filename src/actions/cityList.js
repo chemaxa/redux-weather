@@ -34,7 +34,6 @@ export function addCity(data) {
 }
 
 export function deleteCity(data) {
-    console.log('Submitted data:', data);
     if (!data) return;
     return (dispatch, getState) => {
         let list = getState()['cityList']['list'] || [];
@@ -105,10 +104,8 @@ export function setCurrentCity(data) {
     }
 }
 
-
 export function onInput(input, callback) {
     return (dispatch) => {
-        console.log('Changed data:', input);
         if (!input) { callback(); return; }
         let url = `http://autocompletecity.geobytes.com/AutoCompleteCity?q=${input}`;
         fetchJsonp(url)
@@ -116,7 +113,6 @@ export function onInput(input, callback) {
                 return res.json();
             })
             .then((list) => {
-                console.log('cityList: ', list);
                 let options = list.map(
                     (city) => ({
                         value: city,
