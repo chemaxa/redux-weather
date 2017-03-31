@@ -1,22 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import City from './city'
 
-export default class CityList extends Component {
+const CityList = (props) => {
+  const { list } = props.cityList;
+  if (!list) return null;
 
-  setCurrentCity(e) {
-    this.props.setCurrentCity(+e.target.innerText)
-  }
+  return (
+    <section className='city-list ui cards'>
+      {list.map((city) =>
+        <City key={Math.random().toString(36).substring(7)} city={city} {...props} />
+      )}
+    </section>
+  )
 
-  render() {
-    const { currentCity, list } = this.props.cityList;
-    console.log(currentCity, list);
-    if(!list) return null;
-    return (
-      <section className='city-list ui cards'>
-        {list.map((number) =>
-          <City key={number.toString()} value={number} />
-        )}
-      </section>
-    )
-  }
 }
+export default CityList;

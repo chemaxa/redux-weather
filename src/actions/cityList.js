@@ -94,13 +94,21 @@ export function getCurrentCity() {
     }
 }
 
-export function setCurrentCity(data) {
-    return {
-        type: SET_CURRENT_CITY,
-        payload: {
-            address: data.address,
-            coords: data.coords
-        }
+export function setCurrentCity(city) {
+    return (dispatch) => {
+        getCoordsByCity(city)
+            .then(coords => {
+                dispatch({
+                    type: SET_CURRENT_CITY,
+                    payload: {
+                        address: city,
+                        coords: {
+                            lat: coords.lat,
+                            long: coords.lng
+                        }
+                    }
+                })
+            })
     }
 }
 
@@ -159,6 +167,15 @@ function resolveCoords(position) {
         long: position.coords.longitude
     };
 };
+
+function getCoordsByCity(city) {
+    let url = `https://maps.googleapis.com/maps/api/geocode/json?address=${city}`;
+    return fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then(data => data['results'][0]["geometry"]["location"])
+}
 
 function getCityByCoords({
     lat,

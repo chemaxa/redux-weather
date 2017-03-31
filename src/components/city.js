@@ -1,17 +1,19 @@
 import React from 'react'
 
 const City = (props) => {
+    let { city, actions, cityList: { currentCity } } = props;
+    console.log(city, currentCity)
     return (
         <div className="ui card">
             <div className="content">
-                <div className="header">{props.value.split(',')[0]}</div>
+                <div className={"ui header " + (city === currentCity ? 'blue' : '')}>{city.split(',')[0]}</div>
                 <div className="description">
-                    <p>{props.value}</p>
+                    <p>{city}</p>
                 </div>
 
             </div>
             <div className="ui two bottom attached buttons">
-                <button className="ui bottom mini primary button">
+                <button className={"ui bottom mini primary button " + (city === currentCity ? 'active disabled' : '')} onClick={actions.setCurrentCity.bind(null, city)}>
                     <i className="checkmark icon"></i>
                     Set
                 </button>
