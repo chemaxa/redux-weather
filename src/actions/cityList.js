@@ -7,7 +7,7 @@ import {
     ADD_CITY,
     DELETE_CITY
 } from '../constants/cityList'
-
+import { setForecastByCoord } from './forecast'
 import fetchJsonp from 'fetch-jsonp'
 
 export function addCity(data) {
@@ -95,18 +95,23 @@ export function getCurrentCity() {
 }
 
 export function setCurrentCity(city) {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         getCoordsByCity(city)
             .then(coords => {
+                
+                let data = {
+                    address: city,
+                    coords: {
+                        lat: coords.lat,
+                        long: coords.lng
+                    }
+                };
+                //TODO: Refactor it!
+                // Should be hide dispatch
+                setForecastByCoord(data, dispatch)
                 dispatch({
                     type: SET_CURRENT_CITY,
-                    payload: {
-                        address: city,
-                        coords: {
-                            lat: coords.lat,
-                            long: coords.lng
-                        }
-                    }
+                    payload: data
                 })
             })
     }

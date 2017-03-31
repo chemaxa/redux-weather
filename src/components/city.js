@@ -2,7 +2,7 @@ import React from 'react'
 
 const City = (props) => {
     let { city, actions, cityList: { currentCity } } = props;
-    console.log(city, currentCity)
+
     return (
         <div className="ui card">
             <div className="content">
