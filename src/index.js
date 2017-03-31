@@ -8,19 +8,19 @@ import { KEY } from './constants/api'
 
 import 'semantic-ui-css/semantic.min.css' // semantic ui css
 import 'react-select/dist/react-select.css' // react select css
-
+import './styles.css' // app styles
 // eslint-disable-next-line
 const persistedState = storageApi.getState(KEY);
 const store = configureStore();
 
 store.subscribe(() => {
   //console.log('Subscribe: ',store.getState());
-  storageApi.setState(KEY,store.getState())
+  storageApi.setState(KEY, store.getState())
 })
 
 render(
   <Provider store={store}>
-     <App />
+    <App />
   </Provider>,
   document.getElementById('root')
 )

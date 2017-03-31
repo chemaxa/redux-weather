@@ -11,14 +11,14 @@ const City = (props) => {
 
             </div>
             <div className="ui two bottom attached buttons">
-                <div className="ui bottom mini primary basic button">
-                    <i className="delete icon"></i>
+                <button className="ui bottom mini primary button">
+                    <i className="checkmark icon"></i>
                     Set
-            </div>
-                <div className="ui bottom mini negative basic button">
+                </button>
+                <button className="ui bottom mini negative button">
                     <i className="delete icon"></i>
                     Delete
-            </div>
+                </button>
             </div>
         </div>
     )
