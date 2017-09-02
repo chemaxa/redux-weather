@@ -38,7 +38,7 @@ export function setForecastByCoord({
         type: GET_FORECAST_REQUEST,
         payload: address
     })
-    let url = `http://api.wunderground.com/api/80a9caf2dd83fba3/forecast/geolookup/lang:RU/q/${lat},${long}.json`;
+    let url = `https://api.wunderground.com/api/80a9caf2dd83fba3/forecast/geolookup/lang:RU/q/${lat},${long}.json`;
     fetch(url)
         .then(response => response.json())
         .then((data) => {
