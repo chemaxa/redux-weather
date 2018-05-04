@@ -6,7 +6,7 @@ const City = (props) => {
     return (
         <div className="ui card">
             <div className="content">
-                <div className={"ui header " + (city === currentCity ? 'blue' : '')}>{city.split(',')[0]}</div>
+                <div className={"ui header " + (city === currentCity ? 'blue' : '')}>{city && city.split(',')[0]}</div>
                 <div className="description">
                     <p>{city}</p>
                 </div>
